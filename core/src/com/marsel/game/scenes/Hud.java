@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.marsel.game.MyGdxGame;
@@ -14,7 +15,7 @@ import com.marsel.game.MyGdxGame;
 /**
  * Created by Marsel on 2015-10-15.
  */
-public class Hud {
+public class Hud implements Disposable{
     public Stage stage;
     private Viewport viewport;
 
@@ -24,6 +25,7 @@ public class Hud {
 
     Label countdownLabel;
     Label scoreLabel;
+
     Label timeLabel;
     Label levelLabel;
     Label worldLabel;
@@ -57,5 +59,10 @@ public class Hud {
         table.add(countdownLabel).expandX();
 
         stage.addActor(table);
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
     }
 }
