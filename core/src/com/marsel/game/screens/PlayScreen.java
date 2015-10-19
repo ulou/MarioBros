@@ -20,6 +20,7 @@ import com.marsel.game.MyGdxGame;
 import com.marsel.game.scenes.Hud;
 import com.marsel.game.sprites.Mario;
 import com.marsel.game.tools.B2WorldCreator;
+import com.marsel.game.tools.WorldContactListener;
 import org.w3c.dom.Text;
 
 /**
@@ -66,6 +67,9 @@ public class PlayScreen implements Screen {
         player = new Mario(world, this);
 
         new B2WorldCreator(world, map);
+
+        // collision
+        world.setContactListener(new WorldContactListener());
 
     }
 
