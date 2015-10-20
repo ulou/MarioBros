@@ -6,21 +6,22 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.marsel.game.MyGdxGame;
+import com.marsel.game.screens.PlayScreen;
 
 /**
  * Created by Marsel on 2015-10-18.
  */
 public abstract class InteractiveTileObject {
     protected World world;
-    protected TiledMap map;
     protected TiledMapTile tile;
     protected Rectangle bounds;
     protected Body body;
     protected Fixture fixture;
+    protected TiledMap map;
 
-    public InteractiveTileObject(World world, TiledMap map, Rectangle bounds) {
-        this.world = world;
-        this.map = map;
+    public InteractiveTileObject(PlayScreen screen, Rectangle bounds) {
+        this.world = screen.getWorld();
+        this.map = screen.getMap();
         this.bounds = bounds;
 
 
@@ -40,6 +41,7 @@ public abstract class InteractiveTileObject {
     }
 
     public abstract  void onHeadHit();
+
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();
         filter.categoryBits = filterBit;

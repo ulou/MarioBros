@@ -15,7 +15,7 @@ import com.marsel.game.MyGdxGame;
 /**
  * Created by Marsel on 2015-10-15.
  */
-public class Hud implements Disposable{
+public class Hud implements Disposable {
     public Stage stage;
     private Viewport viewport;
 
@@ -59,6 +59,15 @@ public class Hud implements Disposable{
         table.add(countdownLabel).expandX();
 
         stage.addActor(table);
+    }
+
+    public void update(float dt) {
+        timeCount += dt;
+        if(timeCount >= 1){
+            worldTimer--;
+            countdownLabel.setText(String.format("%03d", worldTimer));
+            timeCount = 0;
+        }
     }
 
     @Override

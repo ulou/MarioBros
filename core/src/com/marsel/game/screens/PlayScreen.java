@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.marsel.game.MyGdxGame;
 import com.marsel.game.scenes.Hud;
+import com.marsel.game.sprites.Goomba;
 import com.marsel.game.sprites.Mario;
 import com.marsel.game.tools.B2WorldCreator;
 import com.marsel.game.tools.WorldContactListener;
@@ -43,6 +44,7 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     private Mario player;
+    private Goomba goomba; // temp
 
     public PlayScreen(MyGdxGame game){
 
@@ -64,9 +66,11 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, -10), true);
         b2dr = new Box2DDebugRenderer();
 
-        player = new Mario(world, this);
+        player = new Mario(this);
 
-        new B2WorldCreator(world, map);
+        goomba = new Goomba(this, .32f, .32f); // temp
+
+        new B2WorldCreator(this);
 
         // collision
         world.setContactListener(new WorldContactListener());
@@ -89,12 +93,14 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
 
         player.update(dt);
+        goomba.update(dt); //temp
 
         gameCam.position.x = player.b2body.getPosition().x;
         //update game with correct cords
         gameCam.update();
         //renderer to draw only what camera see
         renderer.setView(gameCam);
+
     }
 
     public TextureAtlas getAtlas() {
@@ -104,6 +110,14 @@ public class PlayScreen implements Screen {
     @Override
     public void show() {
 
+    }
+
+    public TiledMap getMap() {
+        return map;
+    }
+
+    public World getWorld() {
+        return world;
     }
 
     @Override
@@ -122,6 +136,7 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         player.draw(game.batch);
+        goomba.draw(game.batch); //temp
         game.batch.end();
 
         // set batch to draw what we see.

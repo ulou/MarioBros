@@ -30,9 +30,9 @@ public class Mario extends Sprite {
 
     private boolean runningRight;
 
-    public Mario(World world, PlayScreen screen) {
+    public Mario(PlayScreen screen) {
         super(screen.getAtlas().findRegion("little_mario")); // Mario_and_enemies.pack
-        this.world = world;
+        this.world = screen.getWorld();
 
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -113,7 +113,12 @@ public class Mario extends Sprite {
         shape.setRadius(7 / MyGdxGame.PPM);
 
         fdef.filter.categoryBits = MyGdxGame.MARIO_BIT;
-        fdef.filter.maskBits = MyGdxGame.DEFAULT_BIT | MyGdxGame.COIN_BIT | MyGdxGame.BRICK_BIT;
+        fdef.filter.maskBits =
+                        MyGdxGame.GROUND_BIT |
+                        MyGdxGame.COIN_BIT |
+                        MyGdxGame.BRICK_BIT |
+                        MyGdxGame.ENEMY_BIT |
+                        MyGdxGame.OBJECT_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
