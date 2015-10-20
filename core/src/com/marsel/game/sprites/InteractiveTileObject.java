@@ -31,26 +31,26 @@ public abstract class InteractiveTileObject {
         PolygonShape shape = new PolygonShape();
 
         bdef.type = BodyDef.BodyType.StaticBody;
-        bdef.position.set((bounds.getX() + bounds.getWidth()/2) / MyGdxGame.PPM, (bounds.getY() + bounds.getHeight()/2) / MyGdxGame.PPM);
+        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / MyGdxGame.PPM, (bounds.getY() + bounds.getHeight() / 2) / MyGdxGame.PPM);
 
         body = world.createBody(bdef);
 
-        shape.setAsBox((bounds.getWidth()/2) / MyGdxGame.PPM, (bounds.getHeight()/2) / MyGdxGame.PPM);
+        shape.setAsBox((bounds.getWidth() / 2) / MyGdxGame.PPM, (bounds.getHeight() / 2) / MyGdxGame.PPM);
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
     }
 
-    public abstract  void onHeadHit();
+    public abstract void onHeadHit();
 
-    public void setCategoryFilter(short filterBit){
+    public void setCategoryFilter(short filterBit) {
         Filter filter = new Filter();
         filter.categoryBits = filterBit;
         fixture.setFilterData(filter);
     }
 
     // brick disapear after destroy
-    public TiledMapTileLayer.Cell getCell(){
+    public TiledMapTileLayer.Cell getCell() {
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
-        return layer.getCell((int) (body.getPosition().x * MyGdxGame.PPM / 16), (int)(body.getPosition().y * MyGdxGame.PPM / 16));
+        return layer.getCell((int) (body.getPosition().x * MyGdxGame.PPM / 16), (int) (body.getPosition().y * MyGdxGame.PPM / 16));
     }
 }

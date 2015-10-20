@@ -8,12 +8,11 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.marsel.game.MyGdxGame;
 import com.marsel.game.screens.PlayScreen;
-import org.w3c.dom.Text;
 
 /**
  * Created by Marsel on 2015-10-21.
  */
-public class Goomba extends Enemy{
+public class Goomba extends Enemy {
 
     private float stateTime;
     private Animation walkAnimation;
@@ -22,16 +21,16 @@ public class Goomba extends Enemy{
     public Goomba(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
-        for(int i=0; i<2; i++)
+        for (int i = 0; i < 2; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("goomba"), i * 16, 0, 16, 16));
         walkAnimation = new Animation(0.4f, frames);
         stateTime = 0;
-        setBounds(getX(), getY(), 16/MyGdxGame.PPM, 16/MyGdxGame.PPM);
+        setBounds(getX(), getY(), 16 / MyGdxGame.PPM, 16 / MyGdxGame.PPM);
     }
 
-    public void update(float dt){
+    public void update(float dt) {
         stateTime += dt;
-        setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(walkAnimation.getKeyFrame(stateTime, true));
     }
 
@@ -49,11 +48,11 @@ public class Goomba extends Enemy{
         fdef.filter.categoryBits = MyGdxGame.ENEMY_BIT;
         fdef.filter.maskBits =
                 MyGdxGame.GROUND_BIT |
-                MyGdxGame.COIN_BIT |
-                MyGdxGame.BRICK_BIT |
-                MyGdxGame.ENEMY_BIT |
-                MyGdxGame.OBJECT_BIT |
-                MyGdxGame.MARIO_BIT;
+                        MyGdxGame.COIN_BIT |
+                        MyGdxGame.BRICK_BIT |
+                        MyGdxGame.ENEMY_BIT |
+                        MyGdxGame.OBJECT_BIT |
+                        MyGdxGame.MARIO_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);

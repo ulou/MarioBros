@@ -1,10 +1,8 @@
 package com.marsel.game.sprites;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.World;
 import com.marsel.game.MyGdxGame;
 import com.marsel.game.screens.PlayScreen;
 
