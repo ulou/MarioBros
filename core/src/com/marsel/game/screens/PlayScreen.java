@@ -91,6 +91,7 @@ public class PlayScreen implements Screen {
 
         player.update(dt);
         goomba.update(dt); //temp
+        hud.update(dt);
 
         gameCam.position.x = player.b2body.getPosition().x;
         //update game with correct cords

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
 import com.marsel.game.MyGdxGame;
+import com.marsel.game.scenes.Hud;
 import com.marsel.game.screens.PlayScreen;
 
 /**
@@ -12,6 +13,7 @@ import com.marsel.game.screens.PlayScreen;
 public class Coin extends InteractiveTileObject {
 
     private final int BLANK_COIN = 27 + 1;
+    private boolean scoreTaken = false;
     private TiledMapTileSet tileSet;
 
     public Coin(PlayScreen screen, Rectangle bounds) {
@@ -25,5 +27,9 @@ public class Coin extends InteractiveTileObject {
     public void onHeadHit() {
         Gdx.app.log("Coin", "Collision");
         getCell().setTile(tileSet.getTile(BLANK_COIN));
+        if (!scoreTaken) {
+            Hud.addScore(100);
+            scoreTaken = true;
+        }
     }
 }
