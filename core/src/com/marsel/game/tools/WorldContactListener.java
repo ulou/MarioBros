@@ -1,5 +1,6 @@
 package com.marsel.game.tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
 import com.marsel.game.MyGdxGame;
 import com.marsel.game.sprites.Enemy;
@@ -37,6 +38,9 @@ public class WorldContactListener implements ContactListener{
                     ((Enemy)fixA.getUserData()).reverseVelocity(true, false);
                 } else
                     ((Enemy)fixB.getUserData()).reverseVelocity(true, false);
+                break;
+            case MyGdxGame.MARIO_BIT | MyGdxGame.ENEMY_BIT:
+                Gdx.app.log("Mario", "died");
                 break;
 
         }
