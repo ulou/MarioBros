@@ -31,6 +31,13 @@ public class WorldContactListener implements ContactListener{
                 } else if(fixB.getFilterData().categoryBits == MyGdxGame.ENEMY_HEAD_BIT){
                     ((Enemy)fixB.getUserData()).hitOnHead();
                 }
+                break;
+            case MyGdxGame.ENEMY_BIT | MyGdxGame.OBJECT_BIT:
+                if(fixA.getFilterData().categoryBits == MyGdxGame.ENEMY_BIT){
+                    ((Enemy)fixA.getUserData()).reverseVelocity(true, false);
+                } else
+                    ((Enemy)fixB.getUserData()).reverseVelocity(true, false);
+                break;
 
         }
     }

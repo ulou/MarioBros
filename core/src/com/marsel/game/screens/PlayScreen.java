@@ -21,6 +21,8 @@ import com.marsel.game.sprites.Mario;
 import com.marsel.game.tools.B2WorldCreator;
 import com.marsel.game.tools.WorldContactListener;
 
+import java.util.ArrayList;
+
 /**
  * Created by Marsel on 2015-10-15.
  */
@@ -65,7 +67,7 @@ public class PlayScreen implements Screen {
 
         player = new Mario(this);
 
-        goomba = new Goomba(this, .32f, .32f); // temp
+        goomba = new Goomba(this, 5.64f, .16f); // temp
 
         new B2WorldCreator(this);
 
@@ -91,7 +93,11 @@ public class PlayScreen implements Screen {
 
         player.update(dt);
         goomba.update(dt); //temp
+
+
         hud.update(dt);
+
+
 
         gameCam.position.x = player.b2body.getPosition().x;
         //update game with correct cords

@@ -1,6 +1,7 @@
 package com.marsel.game.sprites;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -40,11 +41,19 @@ public class Goomba extends Enemy {
             world.destroyBody(b2body);
             destroyed = true;
             setRegion(new TextureRegion(screen.getAtlas().findRegion("goomba"), 32, 0, 16, 16));
+            stateTime = 0;
         }else if(!destroyed) {
+            b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             setRegion(walkAnimation.getKeyFrame(stateTime, true));
         }
     }
+
+    public void draw(Batch batch){
+        if(!destroyed || stateTime < 1)
+            super.draw(batch); // goomba disappering after die
+    }
+
 
     @Override
     public void hitOnHead() {
@@ -54,7 +63,8 @@ public class Goomba extends Enemy {
     @Override
     protected void defineEnemy() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set((32*5)/ MyGdxGame.PPM, 32 / MyGdxGame.PPM);
+//        bdef.position.set((32*5)/ MyGdxGame.PPM, 32 / MyGdxGame.PPM); // depracated
+        bdef.position.set(getX(), getY()); // now, we can set position outside goomba class
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -73,7 +83,7 @@ public class Goomba extends Enemy {
 
 
         fdef.shape = shape;
-        b2body.createFixture(fdef);
+        b2body.createFixture(fdef).setUserData(this);
 
         // head shape
         PolygonShape head = new PolygonShape();

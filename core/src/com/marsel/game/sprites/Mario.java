@@ -16,7 +16,6 @@ import com.marsel.game.screens.PlayScreen;
 public class Mario extends Sprite {
     public enum State {FALLING, JUMPING, STANDING, RUNNING}
 
-    ;
     public State currentState;
     public State previousState;
 
@@ -110,6 +109,8 @@ public class Mario extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
+//        PolygonShape shape = new PolygonShape();
+//        shape.setAsBox(4 / MyGdxGame.PPM, 6/MyGdxGame.PPM);
         shape.setRadius(7 / MyGdxGame.PPM);
 
         fdef.filter.categoryBits = MyGdxGame.MARIO_BIT;
