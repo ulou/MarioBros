@@ -45,6 +45,8 @@ public class PlayScreen implements Screen {
     private Mario player;
     private Goomba goomba; // temp
 
+    private boolean inAir;
+
     public PlayScreen(MyGdxGame game){
 
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
@@ -69,6 +71,8 @@ public class PlayScreen implements Screen {
 
         goomba = new Goomba(this, 5.64f, .16f); // temp
 
+        inAir = false;
+
         new B2WorldCreator(this);
 
         // collision
@@ -77,7 +81,7 @@ public class PlayScreen implements Screen {
     }
 
     public void handlerInput(float dt){
-        if(Gdx.input.isKeyJustPressed(Input.Keys.W))
+        if(Gdx.input.isKeyJustPressed(Input.Keys.W) && player.getState() != Mario.State.JUMPING)
             player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
         if(Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2)
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
