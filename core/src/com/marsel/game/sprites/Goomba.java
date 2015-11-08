@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.marsel.game.MyGdxGame;
+import com.marsel.game.scenes.Hud;
 import com.marsel.game.screens.PlayScreen;
 
 /**
@@ -40,6 +41,7 @@ public class Goomba extends Enemy {
         if(setToDestroy && !destroyed){
             world.destroyBody(b2body);
             destroyed = true;
+            Hud.addScore(100);
             setRegion(new TextureRegion(screen.getAtlas().findRegion("goomba"), 32, 0, 16, 16));
             stateTime = 0;
         }else if(!destroyed) {

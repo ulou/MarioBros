@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.marsel.game.scenes.Hud;
 import com.marsel.game.screens.PlayScreen;
 
 /**
@@ -30,7 +31,7 @@ public abstract class Enemy extends Sprite {
             velocity.y = -velocity.y;
     }
 
-
     protected abstract void defineEnemy();
+    public abstract void update(float dt);
     public abstract void hitOnHead();
 }

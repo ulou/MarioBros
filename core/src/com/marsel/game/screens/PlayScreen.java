@@ -16,12 +16,11 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.marsel.game.MyGdxGame;
 import com.marsel.game.scenes.Hud;
+import com.marsel.game.sprites.Enemy;
 import com.marsel.game.sprites.Goomba;
 import com.marsel.game.sprites.Mario;
 import com.marsel.game.tools.B2WorldCreator;
 import com.marsel.game.tools.WorldContactListener;
-
-import java.util.ArrayList;
 
 /**
  * Created by Marsel on 2015-10-15.
@@ -41,11 +40,9 @@ public class PlayScreen implements Screen {
 
     private World world;
     private Box2DDebugRenderer b2dr;
+    private B2WorldCreator creator;
 
     private Mario player;
-    private Goomba goomba; // temp
-
-    private boolean inAir;
 
     public PlayScreen(MyGdxGame game){
 
@@ -69,11 +66,7 @@ public class PlayScreen implements Screen {
 
         player = new Mario(this);
 
-        goomba = new Goomba(this, 5.64f, .16f); // temp
-
-        inAir = false;
-
-        new B2WorldCreator(this);
+        creator = new B2WorldCreator(this);
 
         // collision
         world.setContactListener(new WorldContactListener());
@@ -81,7 +74,7 @@ public class PlayScreen implements Screen {
     }
 
     public void handlerInput(float dt){
-        if(Gdx.input.isKeyJustPressed(Input.Keys.W) && player.getState() != Mario.State.JUMPING)
+        if(Gdx.input.isKeyJustPressed(Input.Keys.W) && player.getState() != Mario.State.JUMPING && player.getState() != Mario.State.FALLING)
             player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
         if(Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2)
             player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
@@ -96,12 +89,12 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
 
         player.update(dt);
-        goomba.update(dt); //temp
-
 
         hud.update(dt);
 
-
+        for(Enemy enemy: creator.getGoombas()){
+            enemy.update(dt);
+        }
 
         gameCam.position.x = player.b2body.getPosition().x;
         //update game with correct cords
@@ -144,7 +137,9 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         player.draw(game.batch);
-        goomba.draw(game.batch); //temp
+        for(Enemy enemy: creator.getGoombas()){
+            enemy.draw(game.batch);
+        }
         game.batch.end();
 
         // set batch to draw what we see.

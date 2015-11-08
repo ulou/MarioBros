@@ -5,15 +5,19 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.marsel.game.MyGdxGame;
 import com.marsel.game.screens.PlayScreen;
 import com.marsel.game.sprites.Brick;
 import com.marsel.game.sprites.Coin;
+import com.marsel.game.sprites.Goomba;
 
 /**
  * Created by Marsel on 2015-10-18.
  */
 public class B2WorldCreator {
+
+    private Array<Goomba> goombas;
 
     public B2WorldCreator(PlayScreen screen) {
         World world = screen.getWorld();
@@ -23,6 +27,8 @@ public class B2WorldCreator {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
+
+        goombas = new Array<Goomba>();
 
         //create ground
         for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
@@ -66,5 +72,16 @@ public class B2WorldCreator {
 
             new Coin(screen, rect);
         }
+
+        // create goombas
+        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            goombas.add(new Goomba(screen, rect.getX() / MyGdxGame.PPM, rect.getY() / MyGdxGame.PPM));
+        }
     }
+
+    public Array<Goomba> getGoombas() {
+        return goombas;
+    }
+
 }
