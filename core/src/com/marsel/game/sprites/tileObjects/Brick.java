@@ -1,4 +1,4 @@
-package com.marsel.game.sprites;
+package com.marsel.game.sprites.tileObjects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;

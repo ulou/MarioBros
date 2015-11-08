@@ -1,4 +1,4 @@
-package com.marsel.game.sprites;
+package com.marsel.game.sprites.tileObjects;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
@@ -18,12 +18,16 @@ public abstract class InteractiveTileObject {
     protected Body body;
     protected Fixture fixture;
     protected TiledMap map;
+    protected PlayScreen screen;
+    protected boolean destroyed;
 
     public InteractiveTileObject(PlayScreen screen, Rectangle bounds) {
+        this.screen = screen;
         this.world = screen.getWorld();
         this.map = screen.getMap();
         this.bounds = bounds;
 
+        destroyed = false;
 
         // define object
         BodyDef bdef = new BodyDef();
@@ -52,5 +56,13 @@ public abstract class InteractiveTileObject {
     public TiledMapTileLayer.Cell getCell() {
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
         return layer.getCell((int) (body.getPosition().x * MyGdxGame.PPM / 16), (int) (body.getPosition().y * MyGdxGame.PPM / 16));
+    }
+
+    public void destroy() {
+        this.destroyed = true;
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
     }
 }

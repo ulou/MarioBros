@@ -3,8 +3,8 @@ package com.marsel.game.tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
 import com.marsel.game.MyGdxGame;
-import com.marsel.game.sprites.Enemy;
-import com.marsel.game.sprites.InteractiveTileObject;
+import com.marsel.game.sprites.enemies.Enemy;
+import com.marsel.game.sprites.tileObjects.InteractiveTileObject;
 
 /**
  * Created by Marsel on 2015-10-19.

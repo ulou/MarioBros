@@ -1,4 +1,4 @@
-package com.marsel.game.sprites;
+package com.marsel.game.sprites.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -22,6 +22,7 @@ public abstract class Enemy extends Sprite {
         setPosition(x, y);
         defineEnemy();
         velocity = new Vector2(0.4f, 0);
+        b2body.setActive(false);
     }
 
     public void reverseVelocity(boolean x, boolean y){

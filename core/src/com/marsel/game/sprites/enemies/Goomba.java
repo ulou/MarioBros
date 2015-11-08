@@ -1,4 +1,4 @@
-package com.marsel.game.sprites;
+package com.marsel.game.sprites.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.marsel.game.MyGdxGame;
 import com.marsel.game.scenes.Hud;
 import com.marsel.game.screens.PlayScreen;
+import com.marsel.game.sprites.enemies.Enemy;
 
 /**
  * Created by Marsel on 2015-10-21.

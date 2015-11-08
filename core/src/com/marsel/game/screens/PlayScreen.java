@@ -14,13 +14,18 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.Array;
 import com.marsel.game.MyGdxGame;
 import com.marsel.game.scenes.Hud;
-import com.marsel.game.sprites.Enemy;
-import com.marsel.game.sprites.Goomba;
+import com.marsel.game.sprites.enemies.Enemy;
 import com.marsel.game.sprites.Mario;
+import com.marsel.game.sprites.items.Item;
+import com.marsel.game.sprites.items.ItemDef;
+import com.marsel.game.sprites.items.Mushroom;
 import com.marsel.game.tools.B2WorldCreator;
 import com.marsel.game.tools.WorldContactListener;
+
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by Marsel on 2015-10-15.
@@ -43,6 +48,9 @@ public class PlayScreen implements Screen {
     private B2WorldCreator creator;
 
     private Mario player;
+    private Array<Item> items;
+    private LinkedBlockingQueue<ItemDef> itemsToSpawn;
+
 
     public PlayScreen(MyGdxGame game){
 
@@ -65,6 +73,8 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         player = new Mario(this);
+        items = new Array<Item>();
+        itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
 
         creator = new B2WorldCreator(this);
 
@@ -72,6 +82,20 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WorldContactListener());
 
     }
+
+    public void spawnItem(ItemDef idef){
+        itemsToSpawn.add(idef);
+    }
+
+    public void handleSpawningItems(){
+        if(!itemsToSpawn.isEmpty()){
+            ItemDef idef = itemsToSpawn.poll();
+            if(idef.type == Mushroom.class){
+                items.add(new Mushroom(this, idef.position.x, idef.position.y));
+            }
+        }
+    }
+
 
     public void handlerInput(float dt){
         if(Gdx.input.isKeyJustPressed(Input.Keys.W) && player.getState() != Mario.State.JUMPING && player.getState() != Mario.State.FALLING)
@@ -85,6 +109,7 @@ public class PlayScreen implements Screen {
 
     public void update(float dt){
         handlerInput(dt);
+        handleSpawningItems();
 
         world.step(1 / 60f, 6, 2);
 
@@ -94,6 +119,12 @@ public class PlayScreen implements Screen {
 
         for(Enemy enemy: creator.getGoombas()){
             enemy.update(dt);
+            if(enemy.getX() < player.getX() + (16*15)/MyGdxGame.PPM)
+                enemy.b2body.setActive(true);
+        }
+
+        for (Item item: items){
+            item.update(dt);
         }
 
         gameCam.position.x = player.b2body.getPosition().x;
@@ -140,6 +171,10 @@ public class PlayScreen implements Screen {
         for(Enemy enemy: creator.getGoombas()){
             enemy.draw(game.batch);
         }
+        for (Item item: items){
+            item.draw(game.batch);
+        }
+
         game.batch.end();
 
         // set batch to draw what we see.

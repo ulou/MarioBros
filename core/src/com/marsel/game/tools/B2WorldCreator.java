@@ -8,9 +8,9 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.marsel.game.MyGdxGame;
 import com.marsel.game.screens.PlayScreen;
-import com.marsel.game.sprites.Brick;
-import com.marsel.game.sprites.Coin;
-import com.marsel.game.sprites.Goomba;
+import com.marsel.game.sprites.tileObjects.Brick;
+import com.marsel.game.sprites.tileObjects.Coin;
+import com.marsel.game.sprites.enemies.Goomba;
 
 /**
  * Created by Marsel on 2015-10-18.
